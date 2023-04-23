@@ -12,15 +12,15 @@ script:
   - docker run -e CI=true jayampathi/react-test npm run test
 
 after_success:
-  - docker build -t jayampthi/dockertest/multi-react-client ./client
-  - docker build -t jayampthi/dockertest/multi-nginx ./nginx
-  - docker build -t jayampthi/dockertest/multi-server ./server
-  - docker build -t jayampthi/dockertest/mutli-worker ./worker
+  - docker build -t jayampthi/multi-react-client ./client
+  - docker build -t jayampthi/multi-nginx ./nginx
+  - docker build -t jayampthi/multi-server ./server
+  - docker build -t jayampthi/mutli-worker ./worker
   - echo "$DOCKER_PW" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push jayampthi/dockertest/multi-react-client
-  - docker push jayampthi/dockertest/multi-nginx
-  - docker push jayampthi/dockertest/multi-server
-  - docker push jayampthi/dockertest/multi-worker
+  - docker push jayampthi/multi-react-client
+  - docker push jayampthi/multi-nginx
+  - docker push jayampthi/multi-server
+  - docker push jayampthi/multi-worker
 
 # log into docker CLI
 
