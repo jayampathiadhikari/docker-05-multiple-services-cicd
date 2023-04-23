@@ -1,0 +1,27 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+# build all the images for tests
+before_install:
+  - docker build -t jayampathi/react-test -f ./client/Dockerfile.dev ./client
+
+# run custom commands to run the tests
+script:
+  - docker run -e CI=true jayampathi/react-test npm run test
+
+after_success:
+  - docker build -t jayampathi/multi-react-client ./client
+  - docker build -t jayampathi/multi-nginx ./nginx
+  - docker build -t jayampathi/multi-server ./server
+  - docker build -t jayampathi/mutli-worker ./worker
+  - echo "$DOCKER_PW" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push jayampathi/multi-react-client
+  - docker push jayampathi/multi-nginx
+  - docker push jayampathi/multi-server
+  - docker push jayampathi/multi-worker
+
+# log into docker CLI
+
+# push to docker hub
